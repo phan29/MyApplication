@@ -1,36 +1,56 @@
-name: Publish release to maven central repository.
-
+name: Publish
 on:
   workflow_dispatch:
-    branches:
-      - main
     inputs:
-      release_version:
+      versionName:
+        description: 'Version Name'
         required: true
-        description: Release version
-
 
 jobs:
   publish:
+    name: Publish
     runs-on: ubuntu-latest
-    steps:
-      - uses: action/checkout@v3
 
-      - name: Set up Java
-        uses: action/setup-java@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'zulu'
+          distribution: 'adopt'
 
-      - name: Build
-        run: ./gradlew build
+      - name: Grant Permission to Execute Gradle
+        run: chmod +x gradlew
 
-      - name: Publish package
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+
+      - name: Publish Library
         run: |
+          echo "Publishing library🚀"
           ./gradlew publish --no-daemon --no-parallel
+          echo "Published✅"
+
+          echo "Releasing repository...🚀"
           ./gradlew closeAndReleaseRepository
+          echo "Released✅"
         env:
-          SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USER }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+
+#      - name: Create Release on GitHub
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.event.inputs.versionName }}
+#          release_name: MyLib ${{ github.event.inputs.versionName }}
+#          draft: true
+#          prerelease: false
