@@ -1,0 +1,36 @@
+name: Publish release to maven central repository.
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+    inputs:
+      release_version:
+        required: true
+        description: Release version
+
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v3
+
+      - name: Set up Java
+        uses: action/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'zulu'
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Publish package
+        run: |
+          ./gradlew publish --no-daemon --no-parallel
+          ./gradlew closeAndReleaseRepository
+        env:
+          SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_KEY: ${{ secrets.GPG_KEY }}
+          GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
