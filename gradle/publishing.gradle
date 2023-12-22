@@ -112,5 +112,7 @@ publishing {
 }
 
 signing {
+    required { signing.keyId != null && signing.password != null }
+    useInMemoryPgpKeys(signing.keyId, signing.password)
     sign publishing.publications
 }
