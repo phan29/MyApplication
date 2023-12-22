@@ -29,10 +29,10 @@ if (secretPropsFile.exists()) {
     }
 } else {
     println "No props file, loading env vars"
-    println("keyId: ",ext['keyId'])
-    println("password: ",ext['password'])
-    println("ossrhUsername: ",ext['ossrhUsername'])
-    println("ossrhPassword: ",ext['ossrhPassword'])
+    println(ext['keyId'])
+    println(ext['password'])
+    println(ext['ossrhUsername'])
+    println(ext['ossrhPassword'])
     ext["keyId"] = System.getenv('GPG_KEY')
     ext["password"] = System.getenv('GPG_PASSWORD')
 //    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
