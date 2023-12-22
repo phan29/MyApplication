@@ -13,8 +13,8 @@ apply plugin: 'signing'
 group = GROUP_ID
 version = VERSION_NAME
 
-ext["signing.keyId"] = ''
-ext["signing.password"] = ''
+ext["keyId"] = ''
+ext["password"] = ''
 ext["signing.secretKeyRingFile"] = ''
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
@@ -29,8 +29,8 @@ if (secretPropsFile.exists()) {
     }
 } else {
     println "No props file, loading env vars"
-    ext["signing.keyId"] = System.getenv('GPG_KEY')
-    ext["signing.password"] = System.getenv('GPG_PASSWORD')
+    ext["keyId"] = System.getenv('GPG_KEY')
+    ext["password"] = System.getenv('GPG_PASSWORD')
 //    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
     ext["ossrhUsername"] = System.getenv('SONATYPE_USER')
     ext["ossrhPassword"] = System.getenv('SONATYPE_PASSWORD')
@@ -112,7 +112,7 @@ publishing {
 }
 
 signing {
-    required { signing.keyId != null && signing.password != null }
-    useInMemoryPgpKeys(signing.keyId, signing.password)
+    required { keyId != null && password != null }
+    useInMemoryPgpKeys(keyId, password)
     sign publishing.publications
 }
