@@ -113,6 +113,10 @@ publishing {
 
 signing {
     required { keyId != null && password != null }
+    println(keyId)
+    println(password)
+    println(ossrhUsername)
+    println(ossrhPassword)
     useInMemoryPgpKeys(keyId, password)
     sign publishing.publications
 }
