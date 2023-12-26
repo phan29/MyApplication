@@ -36,10 +36,10 @@ jobs:
           echo "Published✅"
 
         env:
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSWORD }}
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USER }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_KEY: ${{ secrets.GPG_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
 
 #      - name: Create Release on GitHub
 #        id: create_release
