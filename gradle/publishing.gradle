@@ -32,7 +32,7 @@ if (secretPropsFile.exists()) {
     ext["keyId"] = System.getenv('GPG_KEY')
     ext["password"] = System.getenv('GPG_PASSWORD')
 //    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
-    ext["ossrhUsername"] = System.getenv('SONATYPE_USER')
+    ext["ossrhUsername"] = System.getenv('SONATYPE_USERNAME')
     ext["ossrhPassword"] = System.getenv('SONATYPE_PASSWORD')
     println "Values:"
     println(ext['keyId'])
