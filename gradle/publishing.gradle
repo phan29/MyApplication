@@ -31,10 +31,8 @@ if (secretPropsFile.exists()) {
     println "No props file, loading env vars"
     ext["keyId"] = System.getenv('GPG_KEY')
     ext["password"] = System.getenv('GPG_PASSWORD')
-//    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
     ext["ossrhUsername"] = System.getenv('SONATYPE_USERNAME')
     ext["ossrhPassword"] = System.getenv('SONATYPE_PASSWORD')
-    println "Values:"
     println(ext['keyId'])
     println(ext['password'])
     println(ext['ossrhUsername'])
@@ -99,13 +97,21 @@ publishing {
         maven {
             // This is an arbitrary name, you may also use "mavencentral" or
             // any other name that's descriptive for you
-            name = "sonatype"
+            name = "SonatypeSnapshot"
+            url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 
-            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            // You only need this if you want to publish snapshots, otherwise just set the URL
-            // to the release repo directly
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            // The username and password we've fetched earlier
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
+            }
+        }
+
+        maven {
+            // This is an arbitrary name, you may also use "mavencentral" or
+            // any other name that's descriptive for you
+            name = "MavenCentral"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 
             // The username and password we've fetched earlier
             credentials {
@@ -118,10 +124,6 @@ publishing {
 
 signing {
     required { keyId != null && password != null }
-    println(keyId)
-    println(password)
-    println(ossrhUsername)
-    println(ossrhPassword)
     useInMemoryPgpKeys(keyId, password)
     sign publishing.publications
 }
