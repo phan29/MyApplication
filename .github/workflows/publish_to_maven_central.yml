@@ -32,7 +32,7 @@ jobs:
       - name: Publish Library
         run: |
           echo "Publishing library🚀"
-          ./gradlew publishReleasePublicationToSonatypeRepository
+          ./gradlew publishReleasePublicationToMavenCentralRepository
           echo "Published✅"
 
         env:
