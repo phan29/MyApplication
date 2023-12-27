@@ -1,0 +1,12 @@
+approvals:
+  # check will fail if there is no approval
+  minimum: 1     # optional, leave blank or a value greater than or equal to the Branch Protection Rules `Required no. of approvals`
+  groups:        # optional
+    - name: frontend # This would be the first team or group of reviewers
+      minimum: 1 # optional, leaving this blank would make the review optional for this group. Uncommon, but possible
+      from:
+        - phan29 # currently, only usernames are supported, no team names
+    - name: backend
+      minimum: 1
+      from:
+        - VaibhavSMisal
