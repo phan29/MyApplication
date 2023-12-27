@@ -18,7 +18,7 @@ jobs:
   require-reviewers:
     # Optional: skip check if no relevant label is present
     # This needs to be kept in sync with the labels being checked
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'typescript') || contains(github.event.pull_request.labels.*.name, 'migration') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'typescript') || contains(github.event.pull_request.labels.*.name, 'migration') || contains(github.event.pull_request.labels.*.name, 'basic') }}
     runs-on: ubuntu-latest
     steps:
       - name: Require-reviewers
@@ -29,3 +29,4 @@ jobs:
           rules_yaml: | # define which PR labels require how many aprroving reviewers
             typescript: 2
             migration: 5
+            basic: 1
