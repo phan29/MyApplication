@@ -1,5 +1,5 @@
 # This workflow will set a number or reviewers depending on the labels
-name: Label Reviews
+name: 3rd party Reviews 
 # Trigger the workflow on pull requests
 on:
   pull_request:
