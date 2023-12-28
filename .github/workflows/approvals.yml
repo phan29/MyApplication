@@ -33,7 +33,7 @@ jobs:
           script: |
             try {
             const fs = require('fs')
-            const ownersFileContent = fs.readFileSync('owners.txt', 'utf-8')
+            const ownersFileContent = fs.readFileSync('owners', 'utf-8')
             console.log('ownersFileContent: ',ownersFileContent)
             }
             catch(error) {
