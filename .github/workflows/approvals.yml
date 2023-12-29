@@ -13,43 +13,58 @@ on:
       - synchronize
       - labeled
       - unlabeled
-
 jobs:
-  require-reviewers:
+  process-file:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Execute script
-        uses: actions/github-script@v7
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          script: |
-            const fs = require('fs');
+          node-version: '14'
 
-            const data = {};
-            const lines = fs.readFileSync('owners', 'utf-8').split('\n');
-            console.log("lines: ",lines)
-            
-            lines.forEach(line => {
-            const parts = line.trim().split(' ');
-            let currentObj = data;
+      - name: Run JavaScript Script
+        run: |
+          const fs = require('fs');
 
-            parts.forEach(part => {
-            if (part.includes('/')) {
-              const nestedKeys = part.split('/');
-              nestedKeys.forEach(key => {
-                if(key != "") {
-                  currentObj = currentObj[key] = currentObj[key] || {};
-                }
-              });
-            } else {
-              currentObj = currentObj[part] = currentObj[part] || {};
-            }
-            });
-            });
+          function processLine(line, result) {
+              const parts = line.trim().split(/\/|@/);
+              let current = result;
+              for (const part of parts) {
+                  if (part) {
+                      current = current[part] = current[part] || {};
+                  }
+              }
+          }
 
-            if (data.reviewers) {
-              data.reviewers = Object.keys(data.reviewers);
-            }
-            console.log(JSON.stringify(data, null, 2));
+          function readFile(filePath) {
+              const result = {};
+              const content = fs.readFileSync(filePath, 'utf-8');
+              const lines = content.split('\n');
+          
+              for (const line of lines) {
+                  processLine(line, result);
+              }
+          
+              return result;
+          }
+
+          function formatOutput(data) {
+              const output = {};
+              for (const [key, value] of Object.entries(data)) {
+                  if (typeof value === 'object') {
+                      output[key] = formatOutput(value);
+                  } else {
+                      output[key] = { reviewers: [value] };
+                  }
+              }
+              return output;
+          }
+
+          const filePath = 'your_file.txt';  // Replace with the actual path to your file
+          const data = readFile(filePath);
+          const output = formatOutput(data);
+          console.log(output);
