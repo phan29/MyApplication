@@ -31,9 +31,9 @@ jobs:
             const lines = fs.readFileSync('owners', 'utf-8').split('\n');
             console.log("lines: ",lines)
             
-            lines.forEach(line => {
-            const parts = line.trim().split(' ');
-            let currentObj = data;
+#            lines.forEach(line => {
+#            const parts = line.trim().split(' ');
+#            let currentObj = data;
 #
 #            parts.forEach(part => {
 #            if (part.includes('/')) {
@@ -45,7 +45,7 @@ jobs:
 #            currentObj = currentObj[part] = currentObj[part] || {};
 #            }
 #            });
-            });
+#            });
 #
 #            if (data.reviewers) {
 #            data.reviewers = Object.keys(data.reviewers);
