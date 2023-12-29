@@ -25,34 +25,43 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            try {
-              const fs = require('fs')
-              const readline = require('readline');
-              const file = readline.createInterface({
-                            input: fs.createReadStream('owners'),
-                            output: process.stdout,
-                            terminal: false
-                          });
-              const result = {}
-              file.on('line', (line) => {
-                let myArray = line.split(" ")
-                let keys = myArray[0].split("/")
-                
-                const res = keys.reduce((acc, key, index) => {
-                  if(index == keys.length-1) {
-                      acc[key] = { reviewers: myArray.slice(1) }
-                  }
-                  else {
-                      acc[key] = { reviewers: [] };
-                  }
-                  return acc[key];
-                }, result); 
-            console.log("result: ",JSON.stringify(result, null, 2));
-            console.log("res: ",res);
-            });
-            }
-            catch(error) {console.log("Error reading file: ",error)}
+            const fs = require('fs');
+            
+            function parseInputFile(file_path) {
+              const data = { "reviewers": [] };
+              const lines = fs.readFileSync(file_path, 'utf-8').split('\n');
+              
+              lines.forEach(line => {
+              const parts = line.trim().split(' ');
+              let currentObj = data;
+              
+              parts.forEach(part => {
+              if (part.includes('/')) {
+              const nestedKeys = part.split('/');
+              nestedKeys.forEach(key => {
+              currentObj = currentObj[key] = currentObj[key] || {};
+              });
+              } else {
+              currentObj = currentObj[part] = currentObj[part] || {};
+              }
+              });
+              });
+              
+              processReviewers(data);
+              return data;
+           }
           
+            
+           function processReviewers(data) {
+             if (data.reviewers) {
+               data.reviewers = Object.keys(data.reviewers);
+             }
+           }
+            
+            // Example usage
+            const file_path = 'owners';  // Replace with your actual file path
+            const result = parseInputFile(file_path);
+            console.log(result);
 
 
 #  const ownersFileContent = fs.readFileSync('owners', 'utf-8')
