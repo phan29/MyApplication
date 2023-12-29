@@ -31,6 +31,7 @@ jobs:
               const parts = line.trim().split(' ');
               let currentObj = data;
               const nestedKeys = parts[0].split('/');
+              console.log("nestedKeys: ",nestedKeys)
               nestedKeys.forEach(key => {
                 currentObj = currentObj[key] = currentObj[key] || {"reviewers": []};
               })
