@@ -40,7 +40,10 @@ jobs:
                 }
               });
             } else {
-              currentObj = currentObj[part] = currentObj[part] || {};
+              if(!currentObj.hasOwnProperty("reviewers")) {
+                currentObj["reviewers"] = []
+              }
+              currentObj["reviewers"].push(part)
             }
             });
             });
