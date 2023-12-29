@@ -39,7 +39,9 @@ jobs:
             if (part.includes('/')) {
               const nestedKeys = part.split('/');
               nestedKeys.forEach(key => {
-              currentObj = currentObj[key] = currentObj[key] || {};
+                if(key != "") {
+                  currentObj = currentObj[key] = currentObj[key] || {};
+                }
               });
             } else {
               currentObj = currentObj[part] = currentObj[part] || {};
