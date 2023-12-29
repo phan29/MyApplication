@@ -37,7 +37,7 @@ jobs:
               currentObj["reviewers"].concat(parts.slice(1))
               console.log("currentObj: ",currentObj)
             })
-#            if (data.reviewers) {
-#              data.reviewers = Object.keys(data.reviewers);
-#            }
+            if (data.reviewers) {
+              data.reviewers = Object.keys(data.reviewers);
+            }
             console.log(JSON.stringify(data, null, 2));
