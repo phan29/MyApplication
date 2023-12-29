@@ -27,38 +27,27 @@ jobs:
           script: |
             const fs = require('fs');
 
-            function parseInputFile(file_path) {
-              const data = { "reviewers": [] };
-              const lines = fs.readFileSync(file_path, 'utf-8').split('\n');
+            const data = { "reviewers": [] };
+            const lines = fs.readFileSync('owners', 'utf-8').split('\n');
+            
+            lines.forEach(line => {
+            const parts = line.trim().split(' ');
+            let currentObj = data;
+            
+            parts.forEach(part => {
+            if (part.includes('/')) {
+            const nestedKeys = part.split('/');
+            nestedKeys.forEach(key => {
+            currentObj = currentObj[key] = currentObj[key] || {};
+            });
+            } else {
+            currentObj = currentObj[part] = currentObj[part] || {};
+            }
+            });
+          });
+            
+            if (data.reviewers) {
+            data.reviewers = Object.keys(data.reviewers);
+          }
 
-              lines.forEach(line => {
-              const parts = line.trim().split(' ');
-              let currentObj = data;
-
-              parts.forEach(part => {
-              if (part.includes('/')) {
-              const nestedKeys = part.split('/');
-              nestedKeys.forEach(key => {
-              currentObj = currentObj[key] = currentObj[key] || {};
-              });
-              } else {
-              currentObj = currentObj[part] = currentObj[part] || {};
-              }
-              });
-              });
-
-              processReviewers(data);
-              return data;
-           }
-
-
-           function processReviewers(data) {
-             if (data.reviewers) {
-               data.reviewers = Object.keys(data.reviewers);
-             }
-           }
-
-            // Example usage
-            const file_path = 'owners';  // Replace with your actual file path
-            const result = parseInputFile(file_path);
-            console.log(result);
+            console.log(data);
