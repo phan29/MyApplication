@@ -35,14 +35,11 @@ jobs:
                           });
               const result = {}
               file.on('line', (line) => {
-                console.log(line);
                 let myArray = line.split(" ")
                 let keys = myArray[0].split("/")
                 
-                keys.reduce((acc, key, index) => {
+                const res = keys.reduce((acc, key, index) => {
                   if(index == keys.length-1) {
-                      console.log("index: ",index)
-                      console.log("myArray: ",myArray)
                       acc[key] = { reviewers: myArray.slice(1) }
                   }
                   else {
@@ -52,6 +49,7 @@ jobs:
                 }, result); 
             });
             console.log("result: ",JSON.stringify(result, null, 2));
+            console.log("res: ",res);
             }
             catch(error) {console.log("Error reading file: ",error)}
           
