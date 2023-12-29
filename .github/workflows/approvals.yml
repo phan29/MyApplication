@@ -30,10 +30,12 @@ jobs:
             lines.forEach(line => {
               const parts = line.trim().split(' ');
               let currentObj = data;
-              const nestedKeys = parts[0].split('/').filter(str => str !== '');
+              const nestedKeys = parts[0].split('/');
               console.log("nestedKeys: ",nestedKeys)
               nestedKeys.forEach(key => {
-                currentObj = currentObj[key] = currentObj[key] || {"reviewers": []};
+                if(key != "") {
+                  currentObj = currentObj[key] = currentObj[key] || {"reviewers": []};
+                }
               })
               currentObj["reviewers"].concat(parts.slice(1))
               console.log("currentObj: ",currentObj)
