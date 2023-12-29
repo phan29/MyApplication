@@ -21,21 +21,45 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Upload owners file
-        uses: actions/upload-artifact@v3
-        with:
-          name: upload_owners
-          path: MyApplication/owners
-
       - name: Execute script
         uses: actions/github-script@v7
         with:
           script: |
             try {
-            const fs = require('fs')
-            const ownersFileContent = fs.readFileSync('owners', 'utf-8')
-            console.log('ownersFileContent: ',ownersFileContent)
+              const fs = require('fs')
+              const readline = require('readline');
+              const file = readline.createInterface({
+                            input: fs.createReadStream('owners'),
+                            output: process.stdout,
+                            terminal: false
+                          });
+              const result = {}
+              file.on('line', (line) => {
+                console.log(line);
+                let myArray = line.split(" ")
+                let keys = myArray[0].split("/")
+                
+                keys.reduce((acc, key, index) => {
+                  if(index == keys.length-1) {
+                      console.log("index: ",index)
+                      console.log("myArray: ",myArray)
+                      acc[key] = { reviewers: myArray.slice(1) }
+                  }
+                  else {
+                      acc[key] = { reviewers: [] };
+                  }
+                  return acc[key];
+                }, result); 
+            });
+            console.log(JSON.stringify(result, null, 2));
             }
-            catch(error) {
-            console.error('Error reading file:', error);
-            }
+            catch(error) {console.log("Error reading file: ",error)}
+          
+
+
+#  const ownersFileContent = fs.readFileSync('owners', 'utf-8')
+#            console.log('ownersFileContent: ',ownersFileContent)
+#            }
+#            catch(error) {
+#            console.error('Error reading file:', error);
+#            }
