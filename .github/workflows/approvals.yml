@@ -27,7 +27,7 @@ jobs:
           script: |
             const fs = require('fs');
 
-            const data = { "reviewers": [] };
+            const data = {};
             const lines = fs.readFileSync('owners', 'utf-8').split('\n');
             console.log("lines: ",lines)
             
@@ -37,12 +37,12 @@ jobs:
 
             parts.forEach(part => {
             if (part.includes('/')) {
-            const nestedKeys = part.split('/');
-            nestedKeys.forEach(key => {
-            currentObj = currentObj[key] = currentObj[key] || {};
-            });
+              const nestedKeys = part.split('/');
+              nestedKeys.forEach(key => {
+              currentObj = currentObj[key] = currentObj[key] || {};
+              });
             } else {
-            currentObj = currentObj[part] = currentObj[part] || {};
+              currentObj = currentObj[part] = currentObj[part] || {};
             }
             });
             });
