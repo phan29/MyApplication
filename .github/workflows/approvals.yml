@@ -48,6 +48,6 @@ jobs:
             });
 
             if (data.reviewers) {
-            data.reviewers = Object.keys(data.reviewers);
-          }
-#        console.log(data);
+              data.reviewers = Object.keys(data.reviewers);
+            }
+            console.log(data);
