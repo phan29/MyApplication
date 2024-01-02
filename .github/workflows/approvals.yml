@@ -37,7 +37,7 @@ jobs:
             })
 
             const token = core.getInput('token');
-            const reviews = await github.rest.pulls.listReviews({
+            const reviews = await github.rest.pulls.listRequestedReviewers({
                           ...context.repo,
                           pull_number: context.payload.pull_request.number
                       });
