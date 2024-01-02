@@ -27,6 +27,13 @@ jobs:
             const data = {};
             const lines = fs.readFileSync('owners', 'utf-8').split('\n');
             console.log(`lines: `,lines);
+
+            lines.forEach(lines => {
+              const parts = line.trim().split(' ');
+              console.log(`parts: `,parts);
+              const nestedKeys = parts[0].split('/').filter(str => str !== '');
+              console.log(`nestedKeys: `,nestedKeys);
+            })
             
             console.log(`Hello`)
             return "Hello!"
