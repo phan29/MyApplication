@@ -47,9 +47,8 @@ jobs:
             console.log(`reviews.data.users: `,reviews.data.users);
 
             for (const user of reviews.data.users) {
-              console.log(`user: `,user)
-              console.log(`user.login: `,user.login)
-              console.log(`user.state: `,user.state)
+              console.log(`user: `,user);
+              console.log(`user.login: `,user.login);
             }
 
             console.log(`Hello`)
