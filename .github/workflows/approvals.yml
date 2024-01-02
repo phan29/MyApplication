@@ -43,7 +43,7 @@ jobs:
                       });
             console.log(`reviews.data.users: `,reviews.data.users);
 
-            for (const user in reviews.data.users) {
+            for (const user of reviews.data.users) {
               console.log(`user: `,user)
               console.log(`user: `,user.login)
             }
