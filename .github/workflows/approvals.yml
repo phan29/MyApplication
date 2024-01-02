@@ -22,7 +22,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            console.log("Testing");
+            echo "Testing"
             # const fs = require('fs');
             # const data = {};
             # const lines = fs.readFileSync('owners', 'utf-8').split('\n');
