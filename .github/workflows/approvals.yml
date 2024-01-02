@@ -41,12 +41,10 @@ jobs:
                           ...context.repo,
                           pull_number: context.payload.pull_request.number
                       });
-            console.log(`reviews: `,reviews);
-            console.log(`reviews.data: `,reviews.data);
             console.log(`reviews.data.users: `,reviews.data.users);
-            console.log(`reviews.users: `,reviews.users);
 
             for (const user in reviews.data.users) {
+              console.log(`user: `,user)
               console.log(`user: `,user.login)
             }
 
