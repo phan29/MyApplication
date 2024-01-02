@@ -21,5 +21,7 @@ jobs:
       - name: Execute script
         uses: actions/github-script@v7
         with:
-          script: return "Hello!"
+          script: |
+            console.log(`Hello`)
+            return "Hello!"
           result-encoding: string
