@@ -31,9 +31,18 @@ jobs:
             lines.forEach(line => {
               const parts = line.trim().split(' ');
               console.log(`parts: `,parts);
+
               const nestedKeys = parts[0].split('/').filter(str => str !== '');
               console.log(`nestedKeys: `,nestedKeys);
             })
+
+            const token: string = core.getInput('token');
+            const octokit = github.getOctokit(token);
+            const reviews = await octokit.rest.pulls.listReviews({
+                          ...context.repo,
+                          pull_number: payload.pull_request.number
+                      });
+            console.log(`reviews: `,reviews);
             
             console.log(`Hello`)
             return "Hello!"
