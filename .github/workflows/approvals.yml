@@ -22,45 +22,46 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-            const data = {};
-            const lines = fs.readFileSync('owners', 'utf-8').split('\n');
-            console.log("lines: ",lines)
+            console.log(`Testing`)
+            # const fs = require('fs');
+            # const data = {};
+            # const lines = fs.readFileSync('owners', 'utf-8').split('\n');
+            # console.log("lines: ",lines)
             
-            const approvalsStatus = {}
+            # const approvalsStatus = {}
             
-            lines.forEach(line => {
-              const parts = line.trim().split(' ');
-              let currentObj = data;
-              const nestedKeys = parts[0].split('/').filter(str => str !== '');
-              console.log("nestedKeys: ",nestedKeys)
-              nestedKeys.forEach(key => {
-                  currentObj = currentObj[key] = currentObj[key] || {"reviewers": []};
-              })
-              currentObj["reviewers"].concat(parts.slice(1))
-              for(let i = 1;i<parts.length;i++) {
-                if(!approvalsStatus.hasOwnProperty(parts[i])) {
-                  approvalsStatus[parts[i]] = false
-                }
-              }
-              console.log("currentObj: ",currentObj)
-            })
-            if (data.reviewers) {
-              data.reviewers = Object.keys(data.reviewers);
-            }
-            const ownersMap = JSON.stringify(data, null, 2)
-            
-            # const token: string = core.getInput('token')
-            # const octokit = github.getOctokit(token)
-            # const reviews = await octokit.rest.pulls.listReviews({
-            #               ...context.repo,
-            #               pull_number: payload.pull_request.number
-            #           })
-            
-            # const approved_users: Set<string> = new Set()
-            # for (const review of reviews.data) {
-            # if (review.state === `APPROVED` && review.user) {
-            #   approved_users.add(review.user.login)
+            # lines.forEach(line => {
+            #   const parts = line.trim().split(' ');
+            #   let currentObj = data;
+            #   const nestedKeys = parts[0].split('/').filter(str => str !== '');
+            #   console.log("nestedKeys: ",nestedKeys)
+            #   nestedKeys.forEach(key => {
+            #       currentObj = currentObj[key] = currentObj[key] || {"reviewers": []};
+            #   })
+            #   currentObj["reviewers"].concat(parts.slice(1))
+            #   for(let i = 1;i<parts.length;i++) {
+            #     if(!approvalsStatus.hasOwnProperty(parts[i])) {
+            #       approvalsStatus[parts[i]] = false
+            #     }
+            #   }
+            #   console.log("currentObj: ",currentObj)
+            # })
+            # if (data.reviewers) {
+            #   data.reviewers = Object.keys(data.reviewers);
             # }
-            # }
+            # const ownersMap = JSON.stringify(data, null, 2)
+            
+            # # const token: string = core.getInput('token')
+            # # const octokit = github.getOctokit(token)
+            # # const reviews = await octokit.rest.pulls.listReviews({
+            # #               ...context.repo,
+            # #               pull_number: payload.pull_request.number
+            # #           })
+            
+            # # const approved_users: Set<string> = new Set()
+            # # for (const review of reviews.data) {
+            # # if (review.state === `APPROVED` && review.user) {
+            # #   approved_users.add(review.user.login)
+            # # }
+            # # }
 
