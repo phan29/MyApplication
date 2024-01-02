@@ -27,6 +27,23 @@ jobs:
             const data = {};
             const lines = fs.readFileSync('owners', 'utf-8').split('\n');
             console.log(`lines: `,lines)
+
+            lines.forEach(line => {
+              const parts = line.trim().split(' ');
+              let currentObj = data;
+              const nestedKeys = parts[0].split('/').filter(str => str !== '');
+              console.log(`nestedKeys: `,nestedKeys)
+              nestedKeys.forEach(key => {
+                  currentObj = currentObj[key] = currentObj[key] || {"reviewers": []};
+              })
+              currentObj["reviewers"].concat(parts.slice(1))
+              for(let i = 1; i < parts.length; i++) {
+                if(!approvalsStatus.hasOwnProperty(parts[i])) {
+                  approvalsStatus[parts[i]] = false
+                }
+              }
+              console.log(`currentObj: `,currentObj)
+            })
             
             console.log(`Hello`)
             return "Hello!"
