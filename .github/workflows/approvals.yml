@@ -23,9 +23,6 @@ jobs:
         with:
           result-encoding: string
           script: |
-            import * as core from '@actions/core'
-            import * as github from '@actions/github'
-            
             const fs = require('fs');
             const data = {};
             const lines = fs.readFileSync('owners', 'utf-8').split('\n');
@@ -39,7 +36,7 @@ jobs:
               console.log(`nestedKeys: `,nestedKeys);
             })
 
-            const token: string = core.getInput('token');
+            const token = core.getInput('token');
             const octokit = github.getOctokit(token);
             const reviews = await octokit.rest.pulls.listReviews({
                           ...context.repo,
