@@ -29,13 +29,16 @@ jobs:
             console.log(`lines: `,lines);
 
             lines.forEach(line => {
+              # split the line into individual words
               const parts = line.trim().split(' ');
               console.log(`parts: `,parts);
 
+              # split path into individual words
               const nestedKeys = parts[0].split('/').filter(str => str !== '');
               console.log(`nestedKeys: `,nestedKeys);
             })
 
+            # get list of reviewers on PR (users + teams)
             const token = core.getInput('token');
             const reviews = await github.rest.pulls.listRequestedReviewers({
                           ...context.repo,
@@ -45,7 +48,8 @@ jobs:
 
             for (const user of reviews.data.users) {
               console.log(`user: `,user)
-              console.log(`user: `,user.login)
+              console.log(`user.login: `,user.login)
+              console.log(`user.state: `,user.state)
             }
 
             console.log(`Hello`)
