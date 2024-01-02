@@ -25,7 +25,7 @@ jobs:
           script: |
             const fs = require('fs');
             const data = {};
-            const lines = fs.readFileSync('/owners.txt', 'utf-8').split('\n');
+            const lines = fs.readFileSync('*/owners.txt', 'utf-8').split('\n');
             console.log(`lines: `,lines)
             
             console.log(`Hello`)
