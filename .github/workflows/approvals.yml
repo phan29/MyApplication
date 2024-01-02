@@ -29,16 +29,16 @@ jobs:
             console.log(`lines: `,lines);
 
             lines.forEach(line => {
-              # split the line into individual words
+              // split the line into individual words
               const parts = line.trim().split(' ');
               console.log(`parts: `,parts);
 
-              # split path into individual words
+              // split path into individual words
               const nestedKeys = parts[0].split('/').filter(str => str !== '');
               console.log(`nestedKeys: `,nestedKeys);
             })
 
-            # get list of reviewers on PR (users + teams)
+            // get list of reviewers on PR (users + teams)
             const token = core.getInput('token');
             const reviews = await github.rest.pulls.listRequestedReviewers({
                           ...context.repo,
