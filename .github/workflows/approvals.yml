@@ -37,8 +37,7 @@ jobs:
             })
 
             const token = core.getInput('token');
-            const octokit = github.getOctokit(token);
-            const reviews = await octokit.rest.pulls.listReviews({
+            const reviews = await github.rest.pulls.listReviews({
                           ...context.repo,
                           pull_number: payload.pull_request.number
                       });
