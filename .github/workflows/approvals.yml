@@ -42,6 +42,14 @@ jobs:
                           pull_number: context.payload.pull_request.number
                       });
             console.log(`reviews: `,reviews);
+
+            for (const review in reviews.data) {
+              console.log(`review: `,review);
+              console.log(`review.state: `,review.state);
+              console.log(`review.user: `,review.user);
+              console.log(`review.user.login: `,review.user.login);
+            }
+
             
             console.log(`Hello`)
             return "Hello!"
