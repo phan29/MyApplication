@@ -39,7 +39,7 @@ jobs:
             const token = core.getInput('token');
             const reviews = await github.rest.pulls.listReviews({
                           ...context.repo,
-                          pull_number: payload.pull_request.number
+                          pull_number: context.payload.pull_request.number
                       });
             console.log(`reviews: `,reviews);
             
