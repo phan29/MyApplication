@@ -57,16 +57,6 @@ jobs:
 
               // iterate through the module names set that we extracted from the list of changed files.
               // check if it contains the current module name (path_words[1])
-              for (const module_name of module_names) {
-                if (module_name === path_words[1]) {
-                  for (let i = 1; i < words.length; i++) {
-                    required_approvers.add(words[i]);
-                  }
-                }
-                console.log(`---> module_name: `,module_name);
-                console.log(`path_words[1]: `,path_words[1]);
-                console.log(`required_approvers: `,required_approvers);
-              }
             })
             console.log(`final required_approvers: `,required_approvers);
 
@@ -75,18 +65,18 @@ jobs:
             const reviews = await github.rest.pulls.listReviews({
                           ...context.repo,
                           pull_number: context.payload.pull_request.number
-                      })
+                      });
             console.log(`list of reviews: `,reviews);
 
             // check if we got all the reviews
-            const final_check = true
+            const final_check = true;
             for (const required_approver of required_approvers) {
               for (const review in reviews.data) {
                 if (review.state === `APPROVED` && review.user && required_approver === '@' + review.user.login) {
-                  console.log(`===> review approved for user: `,review.user.login)
+                  console.log(`===> review approved for user: `,review.user.login);
                 } else {
-                  console.log(`---> review.state: `,review.state)
-                  console.log(`review.user.login: `,review.user.login)
+                  console.log(`---> review.state: `,review.state);
+                  console.log(`review.user.login: `,review.user.login);
                   console.log(`required_approver: `,required_approver);
                   final_check = false;
                 }
@@ -96,5 +86,5 @@ jobs:
             // final value
             console.log(`final_value: `,final_value);
 
-            console.log(`Hello`)
-            return "Hello!"
+            console.log(`Hello`);
+            return "Hello!";
