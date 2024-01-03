@@ -54,7 +54,7 @@ jobs:
 
             const reviews2 = await github.rest.pulls.listReviews({
                           ...context.repo,
-                          pull_number: payload.pull_request.number
+                          pull_number: context.payload.pull_request.number
                       })
             console.log(`reviews 2: `,reviews2);
 
