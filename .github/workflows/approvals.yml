@@ -44,13 +44,19 @@ jobs:
                           ...context.repo,
                           pull_number: context.payload.pull_request.number
                       });
-            console.log(`reviews.data.users: `,reviews.data.users);
+            console.log(`reviews: `,reviews);
 
             for (const user of reviews.data.users) {
               console.log(`user: `,user);
               console.log(`user.login: `,user.login);
               console.log(`user.state: `,user.state);
             }
+
+            const reviews2 = await github.rest.pulls.listReviews({
+                          ...context.repo,
+                          pull_number: payload.pull_request.number
+                      })
+            console.log(`reviews 2: `,reviews2);
 
             console.log(`Hello`)
             return "Hello!"
