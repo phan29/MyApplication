@@ -99,7 +99,7 @@ jobs:
 
             if (!final_check) {
               console.log(`Fail the job`);
-              // core.setFailed('Fail the job');
+              core.setFailed('Fail the job');
             }
 
             console.log(`Hello`);
