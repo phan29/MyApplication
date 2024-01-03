@@ -26,22 +26,51 @@ jobs:
         with:
           result-encoding: string
           script: |
+            // get the list of paths of changed files
+            const { execSync } = require('child_process');
+            const { commits } = context.payload.pull_request;
+            const file_names = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString();
+            const changed_files = file_names.split('\n').filter(Boolean);
+            console.log(`changed_files: `,changed_files);
+            
+            // extract the module name from the list
+            const module_names = new Set();
+            for (const file of changed_files) {
+              module_names.add(file.split('\')[0]);
+            }
+            console.log(`module_names: `,module_names);
+            
+            // get the list of reviewers from the text file
             const fs = require('fs');
-            const data = {};
             const lines = fs.readFileSync('owners', 'utf-8').split('\n');
-            console.log(`lines: `,lines);
+            console.log(`individual lines: `,lines);
 
+            const required_approvers = new Set();
             lines.forEach(line => {
               // split the line into individual words
-              const parts = line.trim().split(' ');
-              console.log(`parts: `,parts);
+              const words = line.trim().split(' ');
+              console.log(`words: `,words);
 
-              // split path into individual words
-              const nestedKeys = parts[0].split('/').filter(str => str !== '');
-              console.log(`nestedKeys: `,nestedKeys);
+              // split path (first word) into individual words
+              const path_words = parts[0].split('/').filter(str => str !== '');
+              console.log(`path_words: `,path_words);
+
+              // iterate through the module names set that we extracted from the list of changed files.
+              // check if it contains the current module name (path_words[1])
+              for (const module_name of module_names) {
+                if (module_name === path_words[1]) {
+                  for (let i = 1; i < words.length; i++) {
+                    required_approvers.add(words[i]);
+                  }
+                }
+                console.log(`---> module_name: `,module_name);
+                console.log(`path_words[1]: `,path_words[1]);
+                console.log(`required_approvers: `,required_approvers);
+              }
             })
+            console.log(`final required_approvers: `,required_approvers);
 
-            // get list of reviews on PR
+            // get the list of reviews on the PR
             const token = core.getInput('token');
             const reviews = await github.rest.pulls.listReviews({
                           ...context.repo,
@@ -49,20 +78,23 @@ jobs:
                       })
             console.log(`list of reviews: `,reviews);
 
-            const approved_users = new Set();
-            for (const review of reviews.data) {
-              if (review.state === `APPROVED` && review.user) {
-                // Add the user name to the set
-                approved_users.add(review.user.login)
+            // check if we got all the reviews
+            const final_check = true
+            for (const required_approver of required_approvers) {
+              for (const review in reviews.data) {
+                if (review.state === `APPROVED` && review.user && required_approver === '@' + review.user.login) {
+                  console.log(`===> review approved for user: `,review.user.login)
+                } else {
+                  console.log(`---> review.state: `,review.state)
+                  console.log(`review.user.login: `,review.user.login)
+                  console.log(`required_approver: `,required_approver);
+                  final_check = false;
+                }
               }
             }
-            console.log(`approved_users: `,approved_users);
 
-            const { execSync } = require('child_process')
-            const { commits } = context.payload.pull_request
-            const file_names = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
-            const files = file_names.split('\n').filter(Boolean)
-            console.log(files)
+            // final value
+            console.log(`final_value: `,final_value);
 
             console.log(`Hello`)
             return "Hello!"
