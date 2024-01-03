@@ -46,7 +46,7 @@ jobs:
                       })
             console.log(`list of reviews: `,reviews);
 
-            const approved_users: Set<String> = new Set();
+            const approved_users = new Set();
             for (const review of reviews.data) {
               if (review.state === `APPROVED` && review.user) {
                 // Add the user name to the set
