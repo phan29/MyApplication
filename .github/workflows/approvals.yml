@@ -38,25 +38,22 @@ jobs:
               console.log(`nestedKeys: `,nestedKeys);
             })
 
-            // get list of reviewers on PR (users + teams)
+            // get list of reviews on PR
             const token = core.getInput('token');
-            const reviews = await github.rest.pulls.listRequestedReviewers({
-                          ...context.repo,
-                          pull_number: context.payload.pull_request.number
-                      });
-            console.log(`reviews: `,reviews);
-
-            for (const user of reviews.data.users) {
-              console.log(`user: `,user);
-              console.log(`user.login: `,user.login);
-              console.log(`user.state: `,user.state);
-            }
-
-            const reviews2 = await github.rest.pulls.listReviews({
+            const reviews = await github.rest.pulls.listReviews({
                           ...context.repo,
                           pull_number: context.payload.pull_request.number
                       })
-            console.log(`reviews 2: `,reviews2);
+            console.log(`list of reviews: `,reviews);
+
+            const approved_users: Set<String> = new Set();
+            for (const review of reviews.data) {
+              if (review.state === `APPROVED` && review.user) {
+                // Add the user name to the set
+                approved_users.add(review.user.login)
+              }
+            }
+            console.log(`approved_users: `,approved_users);
 
             console.log(`Hello`)
             return "Hello!"
