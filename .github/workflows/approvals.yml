@@ -35,9 +35,6 @@ jobs:
             
             // extract the module name from the list
             const module_names = new Set();
-            for (const file of changed_files) {
-              module_names.add(file.split('\')[0]);
-            }
             console.log(`module_names: `,module_names);
             
             // get the list of reviewers from the text file
