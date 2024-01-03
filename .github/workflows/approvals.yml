@@ -80,7 +80,7 @@ jobs:
             console.log(`list of reviews: `,reviews);
 
             // check if we got all the reviews
-            const final_check = true
+            let final_check = true
             for (const required_approver of required_approvers) {
               for (const review of reviews.data) {
                 if (review.state === `APPROVED` && review.user && required_approver === '@' + review.user.login) {
