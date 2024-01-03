@@ -97,5 +97,10 @@ jobs:
             // final result
             console.log(`final result: `,final_check);
 
+            if (!final_check) {
+              console.log(`Fail the job`);
+              core.setFailed('Fail the job');
+            }
+
             console.log(`Hello`);
             return "Hello!";
