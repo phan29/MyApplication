@@ -79,5 +79,23 @@ jobs:
                       });
             console.log(`list of reviews: `,reviews);
 
+            // check if we got all the reviews
+            const final_check = true
+            for (const required_approver of required_approvers) {
+              for (const review in reviews.data) {
+                if (review.state === `APPROVED` && review.user && required_approver === '@' + review.user.login) {
+                  console.log(`===> review approved for user: `,review.user.login)
+                } else {
+                  console.log(`---> review.state: `,review.state)
+                  console.log(`review.user.login: `,review.user.login)
+                  console.log(`required_approver: `,required_approver);
+                  final_check = false;
+                }
+              }
+            }
+
+            // final result
+            console.log(`final result: `,final_check);
+
             console.log(`Hello`);
             return "Hello!";
