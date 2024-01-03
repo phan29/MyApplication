@@ -53,11 +53,21 @@ jobs:
               console.log(`words: `,words);
 
               // split path (first word) into individual words
-              const path_words = parts[0].split('/').filter(str => str !== '');
+              const path_words = words[0].split('/').filter(str => str !== '');
               console.log(`path_words: `,path_words);
 
               // iterate through the module names set that we extracted from the list of changed files.
               // check if it contains the current module name (path_words[1])
+              for (const module_name of module_names) {
+                if (module_name === path_words[1]) {
+                  for (let i = 1; i < words.length; i++) {
+                    required_approvers.add(words[i]);
+                  }
+                }
+                console.log(`---> module_name: `,module_name);
+                console.log(`path_words[1]: `,path_words[1]);
+                console.log(`required_approvers: `,required_approvers);
+              }
             })
             console.log(`final required_approvers: `,required_approvers);
 
