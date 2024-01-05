@@ -39,9 +39,14 @@ if (secretPropsFile.exists()) {
     println(ext['ossrhPassword'])
 }
 def versionString = project.version
+
 def versions = project.property('VERSION_NAME')
 
+println "versionString"
 println versionString
+
+println "versions"
+println versions
 
 publishing {
     publications {
