@@ -32,6 +32,7 @@ jobs:
 
      - name: Publish Library
        run: |
+         echo ${{ github.actor }}
          echo "Publishing library🚀"
          ./gradlew publishReleasePublicationToMavenCentralRepository
          echo "Published✅"
