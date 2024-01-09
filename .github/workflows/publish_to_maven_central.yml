@@ -1,6 +1,10 @@
 name: Publish
 on:
  workflow_dispatch:
+  inputs:
+   release_version:
+    required: true
+    description: release version
   branches:
    - main
 
