@@ -100,7 +100,7 @@ publishing {
             // any other name that's descriptive for you
             name = "SonatypeSnapshot"
             url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            // version versionString + "SNAPSHOT"
+            version = versionString + "SNAPSHOT"
 
             // The username and password we've fetched earlier
             credentials {
@@ -114,7 +114,7 @@ publishing {
             // any other name that's descriptive for you
             name = "MavenCentral"
             url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            version versionString
+            version = versionString
 
             // The username and password we've fetched earlier
             credentials {
