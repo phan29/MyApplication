@@ -3,6 +3,9 @@ on:
  workflow_dispatch:
   branches:
    - main
+  inputs:
+   release_version:
+    required: true
 
 jobs:
  publish:
