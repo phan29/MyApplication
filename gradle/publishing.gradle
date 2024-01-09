@@ -39,7 +39,7 @@ if (secretPropsFile.exists()) {
     println(ext['ossrhPassword'])
 }
 def versionString = project.version
-versionString = System.getenv('IS_SNAPSHOT') ? versionString + "-SNAPSHOT" : versionString
+versionString = System.getenv('IS_SNAPSHOT') ? versionString + "-SNAPSHOTS" : versionString
 println("versionString: ")
 println(versionString)
 
