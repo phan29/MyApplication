@@ -39,17 +39,9 @@ if (secretPropsFile.exists()) {
     println(ext['ossrhPassword'])
 }
 def versionString = project.version
-versionString = System.getenv('IS_SNAPSHOT') ? versionString + "-SNAPSHOTS" : versionString
+versionString = System.getenv('IS_SNAPSHOT') ? versionString + "-SNAPSHOT" : versionString
 println("versionString: ")
 println(versionString)
-
-def versions = project.property('VERSION_NAME')
-
-println "versionString"
-println versionString
-
-println "versions"
-println versions
 
 publishing {
     publications {
