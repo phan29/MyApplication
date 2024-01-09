@@ -40,8 +40,8 @@ if (secretPropsFile.exists()) {
 }
 def versionString = project.version
 versionString = System.getenv('IS_SNAPSHOT') ? versionString + "-SNAPSHOT" : versionString
-println("versionString: ")
-println(versionString)
+// println("versionString: ")
+// println(versionString)
 
 publishing {
     publications {
@@ -101,6 +101,8 @@ publishing {
         maven {
             // This is an arbitrary name, you may also use "mavencentral" or
             // any other name that's descriptive for you
+            println("versionString: ")
+            println(versionString)
             name = "SonatypeSnapshot"
             url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             version versionString
