@@ -34,4 +34,4 @@ jobs:
          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-         IS_SNAPSHOT: false
+         IS_SNAPSHOT: 'false'
