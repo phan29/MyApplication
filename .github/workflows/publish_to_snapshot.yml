@@ -6,7 +6,7 @@ on:
 
 jobs:
  publish:
-   # if: github.actor == 'phan29'
+   if: github.actor == 'phan29'
    name: Publish
    runs-on: ubuntu-latest
 
@@ -30,3 +30,4 @@ jobs:
          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+         IS_SNAPSHOT: 'true'
