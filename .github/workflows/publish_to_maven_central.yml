@@ -10,7 +10,7 @@ on:
 
 jobs:
  publish:
-   if: github.actor == 'phan29' || github.actor == 'vedantnd111'
+   if: github.actor == 'phan29'
    name: Publish
    runs-on: ubuntu-latest
 
