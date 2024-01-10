@@ -39,6 +39,7 @@ if (secretPropsFile.exists()) {
     println(ext['ossrhPassword'])
 }
 def versionString = project.version
+versionString = System.getenv('IS_SNAPSHOT') == 'true' ? versionString + '-SNAPSHOT' : versionString
 
 publishing {
     publications {
@@ -47,7 +48,7 @@ publishing {
             // we'll set up in a moment
             groupId GROUP_ID
             artifactId "MyApplication"
-            version VERSION_NAME
+            version versionString
 
             // Two artifacts, the `aar` and the sources
             artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
