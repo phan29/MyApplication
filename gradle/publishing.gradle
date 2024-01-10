@@ -40,6 +40,8 @@ if (secretPropsFile.exists()) {
 }
 def versionString = project.version
 versionString = System.getenv('IS_SNAPSHOT') == 'true' ? versionString + '-SNAPSHOT' : versionString
+println("versionString")
+println(versionString)
 
 publishing {
     publications {
