@@ -1,1 +1,105 @@
-signingPassword
+apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'signing'
+
+android {
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+
+        singleVariant("debug") {
+            withSourcesJar()
+        }
+        multipleVariants {
+            withSourcesJar()
+            allVariants()
+        }
+    }
+}
+
+task javadocJar(type: org.gradle.api.tasks.bundling.Jar, dependsOn: dokkaJavadoc) {
+    classifier("javadoc")
+    from dokkaJavadoc.outputDirectory
+}
+
+def pomConfig = {
+    name = "MyApplication"
+    description = "Testing app"
+    url = "https://github.com/phan29/MyApplication"
+    licenses {
+        license {
+            name = 'The MIT License'
+            url = 'https://opensource.org/license/mit/'
+        }
+    }
+    developers {
+        developer {
+            id = 'phan29'
+            name = 'Phan Tom'
+            email = 'phan29tom@gmail.com'
+        }
+    }
+    // Version control info, if you're using GitHub, follow the format as seen here
+    scm {
+        connection = 'scm:git:github.com/phan29/MyApplication.git'
+        developerConnection = 'scm:git:ssh://github.com/phan29/MyApplication.git'
+        url = 'https://github.com/phan29/MyApplication/tree/main'
+    }
+}
+def versionString = project.version
+afterEvaluate {
+    publishing {
+        publications {
+            version = versionString
+
+            release(MavenPublication) {
+                from components.release
+
+                artifact(javadocJar) {
+                    classifier = 'javadoc'
+                }
+                pom(pomConfig)
+            }
+        }
+        def ossrhUsername = System.getenv("SONATYPE_USERNAME")
+      def ossrhPassword = System.getenv("SONATYPE_PASSWORD")
+        repositories {
+            // The repository to publish to, Sonatype/MavenCentral
+            maven {
+                // This is an arbitrary name, you may also use "mavencentral" or
+                // any other name that's descriptive for you
+                name = "SonatypeSnapshot"
+                url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+
+                // The username and password we've fetched earlier
+                credentials {
+                    username ossrhUsername
+                    password ossrhPassword
+                }
+            }
+
+            maven {
+                // This is an arbitrary name, you may also use "mavencentral" or
+                // any other name that's descriptive for you
+                name = "MavenCentral"
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+                // The username and password we've fetched earlier
+                credentials {
+                    username ossrhUsername
+                    password ossrhPassword
+                }
+            }
+        }
+    }
+
+    def signingKey = System.getenv("PGP_KEY")
+    def signingPassword = System.getenv("PGP_PASSWORD")
+    signing {
+        required { signingKey != null && signingPassword != null }
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications
+    }
+
+}
