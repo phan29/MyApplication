@@ -54,6 +54,9 @@ afterEvaluate {
             version = versionString
 
             release(MavenPublication) {
+                groupId GROUP_ID
+            artifactId "MyApplication"
+            version versionString
                 from components.release
 
                 artifact(javadocJar) {
