@@ -4,7 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-apply from: "$rootDir/gradle/publishing.gradle"
+apply from: "$rootDir/gradle/publishing2.gradle"
 
 android {
     namespace 'com.example.collection'
