@@ -112,7 +112,7 @@ afterEvaluate {
     signing {
         required { signingKey != null && signingPassword != null }
         useInMemoryPgpKeys(signingKey, signingPassword)
-        sign publishing.publications
+        sign publishing.publications.release
     }
 
 }
