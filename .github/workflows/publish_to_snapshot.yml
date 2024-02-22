@@ -1,6 +1,10 @@
 name: Publish
 on:
  workflow_dispatch:
+  inputs:
+    module_name:
+     required: true
+     description: Modules to be released
 
 jobs:
  publish:
