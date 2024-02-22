@@ -30,7 +30,16 @@ jobs:
         echo "module-name: ${{ github.event.inputs.module_name }}"
 
      - name: Publish Library
-       run: ./gradlew :${{ github.event.inputs.module_name }}:publishReleasePublicationToMavenCentralRepository
+       run: ./gradlew :signals:publishReleasePublicationToMavenCentralRepository
+       env:
+         GPG_KEY: ${{ secrets.GPG_KEY }}
+         GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
+         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+         IS_SNAPSHOT: 'false'
+
+     - name: Publish collections Library
+       run: ./gradlew :collection:publishReleasePublicationToMavenCentralRepository
        env:
          GPG_KEY: ${{ secrets.GPG_KEY }}
          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
