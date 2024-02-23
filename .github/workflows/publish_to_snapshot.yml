@@ -37,13 +37,3 @@ jobs:
          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
          IS_SNAPSHOT: 'true'
-
-     - name: Publish collections Library
-       run: ./gradlew :collection:publishReleasePublicationToSonatypeSnapshotRepository
-       env:
-         GPG_KEY: ${{ secrets.GPG_KEY }}
-         GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
-         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-         IS_SNAPSHOT: 'true'
-
