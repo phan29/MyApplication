@@ -30,7 +30,16 @@ jobs:
         echo "module-name: ${{ github.event.inputs.module_name }}"
 
      - name: Publish Library
-       run: ./gradlew :${{ github.event.inputs.module_name }}:publishReleasePublicationToSonatypeSnapshotRepository
+       run: ./gradlew :signals:publishReleasePublicationToSonatypeSnapshotRepository
+       env:
+         GPG_KEY: ${{ secrets.GPG_KEY }}
+         GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USER }}
+         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+         IS_SNAPSHOT: 'true'
+
+     - name: Publish collection Library
+       run: ./gradlew :collection:publishReleasePublicationToSonatypeSnapshotRepository
        env:
          GPG_KEY: ${{ secrets.GPG_KEY }}
          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
