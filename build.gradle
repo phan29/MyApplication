@@ -2,9 +2,10 @@
 
 allprojects {
     repositories {
-        maven {
-            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-        }
+        mavenLocal()
+//        maven {
+//            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+//        }
         maven {
             url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
         }
@@ -18,6 +19,10 @@ allprojects {
 buildscript {
     ext.kotlin_version = "1.8.0"
     repositories {
+        mavenLocal()
+        maven {
+            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+        }
         google()
         jcenter()
         mavenCentral()
