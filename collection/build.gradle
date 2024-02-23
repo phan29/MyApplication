@@ -6,6 +6,7 @@ plugins {
 
 apply from: "$rootDir/gradle/publishing2.gradle"
 
+group = GROUP_ID + '.collection'
 android {
     namespace 'com.example.collection'
     compileSdk 34

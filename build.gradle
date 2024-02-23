@@ -1,5 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+allprojects {
+    repositories {
+        maven {
+            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+        }
+        google()
+        jcenter()
+    }
+    group = GROUP_ID
+    version = VERSION_NAME
+}
+
 buildscript {
     ext.kotlin_version = "1.8.0"
     repositories {
@@ -19,13 +34,3 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
-//allprojects {
-//    repositories {
-//        maven {
-//            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-//        }
-//        google()
-//        jcenter()
-//    }
-//}

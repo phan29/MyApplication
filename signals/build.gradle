@@ -4,6 +4,7 @@ plugins {
 }
 apply from: "$rootDir/gradle/publishing2.gradle"
 
+group = GROUP_ID + '.signals'
 android {
     namespace 'com.example.signals'
     compileSdk 34
