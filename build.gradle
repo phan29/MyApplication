@@ -3,12 +3,12 @@
 allprojects {
     repositories {
         mavenLocal()
-//        maven {
-//            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-//        }
         maven {
-            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
         }
+//        maven {
+//            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+//        }
         google()
         jcenter()
     }
@@ -21,8 +21,11 @@ buildscript {
     repositories {
         mavenLocal()
         maven {
-            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
         }
+//        maven {
+//            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+//        }
         google()
         jcenter()
         mavenCentral()
