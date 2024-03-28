@@ -22,6 +22,10 @@ jobs:
          java-version: '17'
          distribution: 'zulu'
 
+     - name: Set 3P Flag
+       run: |
+        echo "IS_3P_ENABLED=false" >> $GITHUB_ENV
+
      - name: Build
        run: ./gradlew build
 
