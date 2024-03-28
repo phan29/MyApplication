@@ -25,6 +25,10 @@ jobs:
      - name: Build
        run: ./gradlew build
 
+     - name: Set 3P Flag
+       run: |
+        echo "IS_3P_ENABLED=true" >> $GITHUB_ENV
+
      - name: print module's name
        run: |
         echo "module-name: ${{ github.event.inputs.module_name }}"
